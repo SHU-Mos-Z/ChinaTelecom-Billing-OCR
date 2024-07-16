@@ -20,19 +20,17 @@ async def upload_pdfs_ofds_photos(user_id: str, files: List[UploadFile] = File(.
 @user_urls.post("/search_service/")
 def search_service(user_id: str, search_info: SearchServiceInfo):
     with Session(bind=engine) as conn:
-        query = conn.query(Worker.worker_name, Clas.class_name, Dept.dept_name,
-                           Service.service_name, ServiceRecord.service_time, ServiceRecord.buyer_company,
-                           ServiceRecord.seller_company, ServiceRecord.cost).join(
-            Worker, Worker.worker_id == ServiceRecord.worker_id).join(
-            Clas, Worker.class_id == Clas.class_id).join(
-            Dept, Dept.dept_id == Clas.dept_id
-        )
+        query = conn.query(ServiceRecord.service_record_id, ServiceRecord.invoice_type,
+                           ServiceRecord.service_time, ServiceRecord.service_name, ServiceRecord.cost,
+                           ServiceRecord.total, ServiceRecord.total_tax, Worker.worker_name,
+                           ServiceRecord.buyer_company, ServiceRecord.seller_company).join(
+                           Worker, Worker.worker_id == ServiceRecord.worker_id)
         if user_id is not None:
             query = query.filter(ServiceRecord.worker_id == user_id)
         if search_info.service_name is not None:
             query = query.filter(ServiceRecord.service_name == search_info.service_name)
         if search_info.service_money is not None:
-            query = query.filter(ServiceRecord.cost.between(search_info.service_money[0], search_info.service_money[1]))
+            query = query.filter(ServiceRecord.total.between(search_info.service_money[0], search_info.service_money[1]))
         if search_info.seller_company is not None:
             query = query.filter(
                 or_(ServiceRecord.seller_company == search_info.seller_company, ServiceRecord.seller_company is None))
