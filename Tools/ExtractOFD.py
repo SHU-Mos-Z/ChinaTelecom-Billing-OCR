@@ -105,5 +105,3 @@ def read_image_with_chinese_path(file_path):
     image_np = np.array(image)
     image_cv = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
     return image_cv
-
-

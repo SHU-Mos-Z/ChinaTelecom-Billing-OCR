@@ -15,14 +15,13 @@ def process_saved_photo(image_path):
     # 提取所有金额并转换为浮点数
     prices = re.findall(r'¥?(\d+(?:,\d{3})*\.\d{2})', text)
     prices = [float(price.replace(',', '')) for price in prices]
-    print(prices)
     # 将价格列表按降序排序
     sorted_prices = sorted(prices, reverse=True)
     # 分别将最大的和第二大的金额赋值给 total_tax 和 total
-    total_tax = format_price(sorted_prices[0]) if len(sorted_prices) > 0 else None
+    total_tax = format_price(sorted_prices[0]) if len(sorted_prices) > 0 else 0.0
     if len(sorted_prices) > 0:
         sorted_prices.pop(0)
-    total = format_price(sorted_prices[0]) if len(sorted_prices) > 0 else None
+    total = format_price(sorted_prices[0]) if len(sorted_prices) > 0 else 0.0
     if len(sorted_prices) > 0:
         sorted_prices.pop(0)
     cost = ''
@@ -85,7 +84,7 @@ def extract_date(text):
         day = date_str[8:10]
         invoice_date = f"{year}-{month}-{day}"
         return invoice_date
-    return None
+    return ''
 
 
 def extract_chinese_characters(filename):

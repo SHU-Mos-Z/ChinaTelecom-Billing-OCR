@@ -1,6 +1,6 @@
 # coding: utf-8
 from sqlalchemy import Column, DateTime, Float, ForeignKey, String, text
-from sqlalchemy.dialects.mysql import ENUM, TINYINT
+from sqlalchemy.dialects.mysql import ENUM, TINYINT, YEAR
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -41,6 +41,28 @@ class ServiceRecord(Base):
     cost = Column(String(60, 'utf8_unicode_ci'), nullable=False)
     total = Column(Float, nullable=False)
     total_tax = Column(Float, nullable=False)
-    is_exception = Column(TINYINT(1), server_default=text("'0'"))
+    is_exception = Column(TINYINT(1), nullable=False, server_default=text("'0'"))
+
+    worker = relationship('Worker')
+
+
+class WorkerQuotaMonthly(Base):
+    __tablename__ = 'worker_quota_monthly'
+
+    worker_id = Column(ForeignKey('worker.worker_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True,
+                       nullable=False)
+    year_ = Column(YEAR(4), primary_key=True, nullable=False)
+    quota_01 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_02 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_03 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_04 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_05 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_06 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_07 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_08 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_09 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_10 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_11 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_12 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
 
     worker = relationship('Worker')

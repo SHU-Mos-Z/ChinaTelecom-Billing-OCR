@@ -7,10 +7,10 @@ def process_saved_pdf(file_dir):
     if file_dir.endswith(".pdf"):
         pdf_document = fitz.open(file_dir)
         username = extract_chinese_characters(file_dir)
-        invoice_id = None
-        invoice_date = None
-        buyer_id = None
-        seller_id = None
+        invoice_id = ''
+        invoice_date = ''
+        buyer_id = ''
+        seller_id = ''
         reimbursement_type = ''
         cost = ''
         tax = ''

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, update
+from sqlalchemy import update
 from sqlalchemy.orm import Session
 from Database.Models import *
 from Tools.DataBaseTools import *
