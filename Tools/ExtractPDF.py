@@ -11,6 +11,7 @@ def process_saved_pdf(file_dir):
         invoice_date = ''
         buyer_id = ''
         seller_id = ''
+        buyer_and_seller_name = []
         reimbursement_type = ''
         cost = ''
         tax = ''
@@ -20,12 +21,17 @@ def process_saved_pdf(file_dir):
             page = pdf_document.load_page(page_num)
             page_text = page.get_text()
             phrases = extract_phrases(list(page_text.strip()))  # 扫描的文字结果提取为短语列表
-            # print(phrases)
+            print(phrases)
             service_money = extract_percent_with_nearby_numbers(data=phrases)  # 找出全部百分比字符串附近的数字
             service_text = extract_percent_with_nearby_text(data=phrases)  # 找出距离百分比字符串最近的非数字的字符串
+            buyer_and_seller_name.clear()
             for phrase in phrases:
                 if phrase.startswith('243') or phrase.startswith('031'):
                     invoice_id = phrase
+                if '有限公司' in phrase:
+                    buyer_and_seller_name.append(phrase)
+            while len(buyer_and_seller_name) <= 1:
+                buyer_and_seller_name.append('')
             for money_list, text_near_percentage in zip(service_money, service_text):
                 if '餐' in text_near_percentage:
                     reimbursement_type += '餐饮,'
@@ -49,6 +55,8 @@ def process_saved_pdf(file_dir):
             'invoice_date': invoice_date,  # 开票时间
             'buyer_id': buyer_id,  # 购买方代码
             'seller_id': seller_id,  # 销售方代码
+            'buyer_name': buyer_and_seller_name[0],
+            'seller_name': buyer_and_seller_name[1],
             'username': username,  # 开票人
             'reimbursement_type': reimbursement_type,  # 开票类型 餐饮或者非餐饮
             'cost': cost,  # 发票上每一条的金额，逗号隔开
@@ -58,15 +66,17 @@ def process_saved_pdf(file_dir):
 
     else:
         return {
-            'invoice_id': None,
-            'invoice_date': None,
-            'buyer_id': None,
-            'seller_id': None,
-            'username': None,
-            'reimbursement_type': None,
-            'cost': None,
-            'total': None,
-            'total_tax': None
+            'invoice_id': '',
+            'invoice_date': '',
+            'buyer_id': '',
+            'seller_id': '',
+            'buyer_name': '',
+            'seller_name': '',
+            'username': '',
+            'reimbursement_type': '',
+            'cost': '',
+            'total': 0.0,
+            'total_tax': 0.0
         }
 
 

@@ -49,8 +49,9 @@ async def search_service(user_id: str, search_info: SearchServiceInfo):
         query = conn.query(ServiceRecord.service_record_id, ServiceRecord.invoice_type,
                            ServiceRecord.service_time, ServiceRecord.service_name, ServiceRecord.cost,
                            ServiceRecord.total, ServiceRecord.total_tax, Worker.worker_name,
-                           ServiceRecord.buyer_company, ServiceRecord.seller_company).join(
-            Worker, Worker.worker_id == ServiceRecord.worker_id)
+                           ServiceRecord.buyer_company_id, ServiceRecord.seller_company_id,
+                           ServiceRecord.buyer_company_name, ServiceRecord.seller_company_name).join(
+                           Worker, Worker.worker_id == ServiceRecord.worker_id)
         if user_id is not None:
             query = query.filter(ServiceRecord.worker_id == user_id)
         if search_info.service_name is not None:
@@ -65,6 +66,10 @@ async def search_service(user_id: str, search_info: SearchServiceInfo):
             query = query.filter(
                 or_(ServiceRecord.service_time.between(search_info.service_time[0], search_info.service_time[1]),
                     ServiceRecord.service_time is None))
+        if search_info.upload_time is not None:
+            query = query.filter(
+                or_(ServiceRecord.upload_time.between(search_info.upload_time[0], search_info.upload_time[1]),
+                    ServiceRecord.upload_time is None))
         if search_info.is_exception is not None:
             query = query.filter(
                 or_(ServiceRecord.is_exception == search_info.is_exception, ServiceRecord.is_exception is None))

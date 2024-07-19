@@ -13,6 +13,10 @@ class SearchServiceInfo(BaseModel):
         datetime(datetime.now().year, 1, 1),
         datetime(datetime.now().year, 12, 31, 23, 59, 59)
     )
+    upload_time: Union[Tuple[datetime, datetime], None] = (
+        datetime(datetime.now().year, 1, 1),
+        datetime(datetime.now().year, 12, 31, 23, 59, 59)
+    )
     is_exception: Union[bool, None] = False
 
 

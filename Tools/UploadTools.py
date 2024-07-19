@@ -19,8 +19,10 @@ class UploadRecord(BaseModel):
     invoice_type: str
     service_time: datetime = None
     upload_time: datetime = None
-    buyer_company: str = None
-    seller_company: str = None
+    buyer_company_id: str = None
+    seller_company_id: str = None
+    buyer_company_name: str = None
+    seller_company_name: str = None
     worker_id: str
     cost: str
     total: float
@@ -62,8 +64,10 @@ async def extract_file(file: UploadFile, user_id: str, conn: Session, temp_dir: 
         'invoice_type': invoice_type,
         'service_time': file_info['invoice_date'],
         'upload_time': datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S'),
-        'buyer_company': file_info['buyer_id'],
-        'seller_company': file_info['seller_id'],
+        'buyer_company_id': file_info['buyer_id'],
+        'seller_company_id': file_info['seller_id'],
+        'buyer_company_name': file_info['buyer_name'],
+        'seller_company_name': file_info['seller_name'],
         'worker_id': query.all()[0][0],
         'cost': file_info['cost'],
         'total': file_info['total'],

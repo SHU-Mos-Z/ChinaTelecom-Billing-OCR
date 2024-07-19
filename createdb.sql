@@ -50,8 +50,10 @@ create table service_record
     invoice_type enum('pdf', 'ofd', 'image') not null,	-- 发票类型
     service_time datetime,	-- 开票时间
     upload_time datetime,	-- 上传时间
-    buyer_company varchar(60),	-- 购买方信用代码
-    seller_company varchar(60),	-- 销售方信用代码
+    buyer_company_id varchar(60),	-- 购买方信用代码
+    seller_company_id varchar(60),	-- 销售方信用代码
+	buyer_company_name varchar(60),	-- 购买方信用名称
+    seller_company_name varchar(60),	-- 销售方信用名称
     worker_id varchar(60) not null,	-- 开票人
     cost varchar(60) not null,	-- 金额
     total float4 not null,	-- 总额
@@ -96,79 +98,79 @@ CROSS JOIN (
     UNION ALL SELECT @start_year + 4
 ) AS years;
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('1', '餐饮', 'pdf', '2024-07-01 10:00:00', 'ChinaTelcom', 'FoodCorp', 'W001', '100.0', '100.0', '116.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('2', '餐饮', 'pdf', '2024-07-02 11:00:00', 'ChinaTelcom', 'FoodCorp', 'W002', '150.0', '150.0', '174.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('3', '餐饮', 'pdf', '2024-07-03 09:00:00', 'ChinaTelcom', 'TechConsult', 'W005', '500.0', '500.0', '580.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('4', '餐饮', 'pdf', '2024-07-04 14:00:00', 'ChinaTelcom', 'FoodCorp', 'W003', '80.0', '80.0', '92.8');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('5', '餐饮', 'pdf', '2024-07-05 15:00:00', 'ChinaTelcom', 'TechConsult', 'W007', '1200.0', '1200.0', '1392.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('6', '餐饮', 'pdf', '2024-07-06 13:00:00', 'ChinaTelcom', 'FoodCorp', 'W009', '200.0', '200.0', '232.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('7', '餐饮', 'pdf', '2024-07-07 16:00:00', 'ChinaTelcom', 'TechConsult', 'W011', '700.0', '700.0', '812.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('8', '餐饮', 'pdf', '2024-07-08 12:00:00', 'ChinaTelcom', 'FoodCorp', 'W013', '250.0', '250.0', '290.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('9', '餐饮', 'pdf', '2024-07-09 11:30:00', 'ChinaTelcom', 'TechConsult', 'W014', '600.0', '600.0', '696.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('10', '餐饮', 'pdf', '2024-07-10 10:30:00', 'ChinaTelcom', 'FoodCorp', 'W006', '180.0', '180.0', '208.8');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('11', '餐饮', 'pdf', '2024-01-11 10:00:00', 'ChinaTelecom', 'FoodCorp', 'W001', '90.0', '90.0', '104.4');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('12', '办公用品', 'pdf', '2024-08-12 11:00:00', 'ChinaTelecom', 'OfficeSupplyCo', 'W001', '200.0', '200.0', '232.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('13', 'IT服务', 'pdf', '2024-09-13 09:00:00', 'ChinaTelecom', 'TechConsult', 'W001', '300.0', '300.0', '348.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('14', '餐饮', 'pdf', '2024-01-14 14:00:00', 'ChinaTelecom', 'FoodCorp', 'W001', '50.0', '50.0', '58.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('15', '办公用品', 'pdf', '2024-07-15 15:00:00', 'ChinaTelecom', 'OfficeSupplyCo', 'W001', '150.0', '150.0', '174.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('16', '餐饮', 'pdf', '2024-04-16 13:00:00', 'ChinaTelecom', 'FoodCorp', 'W001', '120.0', '120.0', '139.2');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('17', 'IT服务', 'pdf', '2024-03-17 16:00:00', 'ChinaTelecom', 'TechConsult', 'W001', '400.0', '400.0', '464.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('18', '餐饮', 'pdf', '2024-07-18 12:00:00', 'ChinaTelecom', 'FoodCorp', 'W001', '300.0', '300.0', '348.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('19', '餐饮', 'pdf', '2024-02-19 11:30:00', 'ChinaTelecom', 'TechConsult', 'W001', '600.0', '600.0', '696.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('20', '餐饮', 'pdf', '2024-07-20 10:30:00', 'ChinaTelecom', 'FoodCorp', 'W001', '80.0', '80.0', '92.8');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('21', 'IT服务', 'pdf', '2024-07-21 14:30:00', 'ChinaTelecom', 'TechConsult', 'W001', '250.0', '250.0', '290.0');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('22', '餐饮', 'pdf', '2024-07-22 15:30:00', 'ChinaTelecom', 'FoodCorp', 'W001', '70.0', '70.0', '81.2');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('23', '办公用品', 'pdf', '2024-07-23 12:00:00', 'ChinaTelecom', 'OfficeSupplyCo', 'W001', '90.0', '90.0', '104.4');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('24', '餐饮', 'pdf', '2024-07-24 11:00:00', 'ChinaTelecom', 'FoodCorp', 'W001', '130.0', '130.0', '150.8');
 
-INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company, seller_company, worker_id, cost, total, total_tax) 
+INSERT INTO service_record (service_record_id, service_name, invoice_type, service_time, buyer_company_name, seller_company_name, worker_id, cost, total, total_tax) 
 VALUES ('25', 'IT服务', 'pdf', '2024-07-25 16:00:00', 'ChinaTelecom', 'TechConsult', 'W001', '500.0', '500.0', '580.0');
 
 

@@ -35,8 +35,10 @@ class ServiceRecord(Base):
     invoice_type = Column(ENUM('pdf', 'ofd', 'image'), nullable=False)
     service_time = Column(DateTime)
     upload_time = Column(DateTime)
-    buyer_company = Column(String(60, 'utf8_unicode_ci'))
-    seller_company = Column(String(60, 'utf8_unicode_ci'))
+    buyer_company_id = Column(String(60, 'utf8_unicode_ci'))
+    seller_company_id = Column(String(60, 'utf8_unicode_ci'))
+    buyer_company_name = Column(String(60, 'utf8_unicode_ci'))
+    seller_company_name = Column(String(60, 'utf8_unicode_ci'))
     worker_id = Column(ForeignKey('worker.worker_id'), nullable=False, index=True)
     cost = Column(String(60, 'utf8_unicode_ci'), nullable=False)
     total = Column(Float, nullable=False)
@@ -49,8 +51,7 @@ class ServiceRecord(Base):
 class WorkerQuotaMonthly(Base):
     __tablename__ = 'worker_quota_monthly'
 
-    worker_id = Column(ForeignKey('worker.worker_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True,
-                       nullable=False)
+    worker_id = Column(ForeignKey('worker.worker_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
     year_ = Column(YEAR(4), primary_key=True, nullable=False)
     quota_01 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
     quota_02 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
