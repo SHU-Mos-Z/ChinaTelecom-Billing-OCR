@@ -20,7 +20,7 @@ def process_saved_pdf(file_dir):
             page = pdf_document.load_page(page_num)
             page_text = page.get_text()
             phrases = extract_phrases(list(page_text.strip()))  # 扫描的文字结果提取为短语列表
-            print(phrases)
+            # print(phrases)
             service_money = extract_percent_with_nearby_numbers(data=phrases)  # 找出全部百分比字符串附近的数字
             service_text = extract_percent_with_nearby_text(data=phrases)  # 找出距离百分比字符串最近的非数字的字符串
             for phrase in phrases:
@@ -83,7 +83,6 @@ def extract_percent_with_nearby_numbers(data):
                     j -= 1
                     continue
                 nearby_numbers.insert(0, data[j])
-                print(data[j])
                 j -= 1
             k = i + 1
             while k < n and '.' in data[k]:
@@ -91,7 +90,6 @@ def extract_percent_with_nearby_numbers(data):
                     k += 1
                     continue
                 nearby_numbers.append(data[k])
-                print(data[k])
                 k += 1
             result.append(nearby_numbers)
         i += 1

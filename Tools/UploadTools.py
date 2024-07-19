@@ -52,7 +52,7 @@ async def extract_file(file: UploadFile, user_id: str, conn: Session, temp_dir: 
     # print(file_info)
     if not await validate_invoice(file_info):
         return {'msg': '文件识别信息不充分，请重试'}
-    query = conn.query(Worker.worker_name).where(get_where_conditions([Worker.worker_name], file_info['username']))
+    query = conn.query(Worker.worker_id).where(get_where_conditions([Worker.worker_name], file_info['username']))
     if len(query.all()) == 0:
         return {'msg': '扫描得到的员工姓名不存在，请重试'}
     print(file_info)
@@ -64,7 +64,7 @@ async def extract_file(file: UploadFile, user_id: str, conn: Session, temp_dir: 
         'upload_time': datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S'),
         'buyer_company': file_info['buyer_id'],
         'seller_company': file_info['seller_id'],
-        'worker_id': user_id,
+        'worker_id': query.all()[0][0],
         'cost': file_info['cost'],
         'total': file_info['total'],
         'total_tax': file_info['total_tax'],

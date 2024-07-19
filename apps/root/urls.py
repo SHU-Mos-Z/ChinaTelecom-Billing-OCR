@@ -12,4 +12,4 @@ async def upload_pdfs_ofds_photos(user_id: str, files: List[UploadFile] = File(.
             return {'msg': '当前账户非法，无法上传'}
         temp_dir = './uploaded_files/temp'
         save_dir = './uploaded_files/saved'
-        return await upload_files(user_id, files, conn, temp_dir, save_dir)
+        return await extract_and_upload_files(user_id, files, conn, temp_dir, save_dir)
