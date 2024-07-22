@@ -122,8 +122,8 @@ async def extract_and_upload_files(user_id: str, files: List[UploadFile], conn: 
 
 
 async def validate_invoice(data):
-    required_keys = ['invoice_id', 'invoice_date', 'buyer_id', 'seller_id', 'username', 'reimbursement_type', 'cost',
-                     'total', 'total_tax']
+    required_keys = ['invoice_id', 'invoice_date', 'buyer_id', 'seller_id',
+                     'username', 'reimbursement_type', 'cost', 'total', 'total_tax']
     for key in required_keys:
         if key not in data:
             return False

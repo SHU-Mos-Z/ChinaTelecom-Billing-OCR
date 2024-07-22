@@ -16,7 +16,7 @@ create table worker
 	worker_id varchar(60) not null,
 	class_id varchar(60) not null,
     worker_name varchar(60) not null,
-    role enum('normal', 'class_manager', 'center_manager', 'invoice_manager') not null,
+    role enum('normal', 'class_manager', 'center_manager', 'system_manager') not null,
     pwd varchar(120) not null,
     primary key(worker_id),
     foreign key(class_id) references class(class_id) on update cascade on delete cascade
@@ -71,7 +71,7 @@ INSERT INTO class (class_id, class_name) VALUES ('C003', '食堂');
 
 INSERT INTO worker (worker_id, class_id, worker_name, role, pwd) VALUES ('W001', 'C001', '张洁铭', 'class_manager', '12345');
 INSERT INTO worker (worker_id, class_id, worker_name, role, pwd) VALUES ('W002', 'C001', '付致宁', 'center_manager', '12345');
-INSERT INTO worker (worker_id, class_id, worker_name, role, pwd) VALUES ('W003', 'C001', '黄奕', 'invoice_manager', '12345');
+INSERT INTO worker (worker_id, class_id, worker_name, role, pwd) VALUES ('W003', 'C001', '黄奕', 'system_manager', '12345');
 INSERT INTO worker (worker_id, class_id, worker_name, role, pwd) VALUES ('W004', 'C001', '赵红燕', 'normal', '12345');
 INSERT INTO worker (worker_id, class_id, worker_name, role, pwd) VALUES ('W005', 'C001', '唐文琪', 'normal', '12345');
 INSERT INTO worker (worker_id, class_id, worker_name, role, pwd) VALUES ('W006', 'C001', '陈峙良', 'normal', '12345');

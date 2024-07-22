@@ -1,4 +1,4 @@
-from sqlalchemy import and_, or_
+from sqlalchemy import and_
 from cryptography.fernet import Fernet
 import pandas as pd
 import io

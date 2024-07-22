@@ -21,7 +21,7 @@ class Worker(Base):
     worker_id = Column(String(60, 'utf8_unicode_ci'), primary_key=True)
     class_id = Column(ForeignKey('class.class_id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     worker_name = Column(String(60, 'utf8_unicode_ci'), nullable=False)
-    role = Column(ENUM('normal', 'class_manager', 'center_manager', 'invoice_manager'), nullable=False)
+    role = Column(ENUM('normal', 'class_manager', 'center_manager', 'system_manager'), nullable=False)
     pwd = Column(String(120, 'utf8_unicode_ci'), nullable=False)
 
     _class = relationship('Clas')
@@ -51,7 +51,8 @@ class ServiceRecord(Base):
 class WorkerQuotaMonthly(Base):
     __tablename__ = 'worker_quota_monthly'
 
-    worker_id = Column(ForeignKey('worker.worker_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
+    worker_id = Column(ForeignKey('worker.worker_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True,
+                       nullable=False)
     year_ = Column(YEAR(4), primary_key=True, nullable=False)
     quota_01 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
     quota_02 = Column(Float(16), nullable=False, server_default=text("'0.00'"))

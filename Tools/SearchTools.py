@@ -1,4 +1,5 @@
 from typing import Union, Tuple, Dict
+from sqlalchemy import or_
 from datetime import datetime
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -25,6 +26,40 @@ class SearchQuotaInfo(BaseModel):
         datetime(datetime.now().year, 1, 1),
         datetime(datetime.now().year, 12, 31)
     )
+
+
+async def search_service_for_user(user_id: str, conn: Session, search_info: SearchServiceInfo):
+    query = conn.query(ServiceRecord.service_record_id, ServiceRecord.invoice_type,
+                       ServiceRecord.service_time, ServiceRecord.service_name, ServiceRecord.cost,
+                       ServiceRecord.total, ServiceRecord.total_tax, Worker.worker_name,
+                       ServiceRecord.buyer_company_id, ServiceRecord.seller_company_id,
+                       ServiceRecord.buyer_company_name, ServiceRecord.seller_company_name).join(
+        Worker, Worker.worker_id == ServiceRecord.worker_id)
+    if user_id is not None:
+        query = query.filter(ServiceRecord.worker_id == user_id)
+    if search_info.service_name is not None:
+        query = query.filter(ServiceRecord.service_name == search_info.service_name)
+    if search_info.service_money is not None:
+        query = query.filter(
+            ServiceRecord.total.between(search_info.service_money[0], search_info.service_money[1]))
+    if search_info.seller_company is not None:
+        query = query.filter(
+            or_(ServiceRecord.seller_company == search_info.seller_company, ServiceRecord.seller_company is None))
+    if search_info.service_time is not None:
+        query = query.filter(
+            or_(ServiceRecord.service_time.between(search_info.service_time[0], search_info.service_time[1]),
+                ServiceRecord.service_time is None))
+    if search_info.upload_time is not None:
+        query = query.filter(
+            or_(ServiceRecord.upload_time.between(search_info.upload_time[0], search_info.upload_time[1]),
+                ServiceRecord.upload_time is None))
+    if search_info.is_exception is not None:
+        query = query.filter(
+            or_(ServiceRecord.is_exception == search_info.is_exception, ServiceRecord.is_exception is None))
+    results = query.all()
+    if len(results) == 0:
+        results = {'msg': '查找结果为空'}
+    return results
 
 
 async def search_quota_for_user(user_id: str, conn: Session, search_info: SearchQuotaInfo) -> Dict:
