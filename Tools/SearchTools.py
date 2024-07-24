@@ -51,6 +51,8 @@ async def search_service_for_user(user_id: str, conn: Session, search_info: Sear
         Worker, Worker.worker_id == ServiceRecord.worker_id)
     if user_id is not None:
         query = query.filter(ServiceRecord.worker_id == user_id)
+    if search_info is None:
+        search_info = SearchServiceInfoUser()
     if search_info.service_name is not None:
         query = query.filter(ServiceRecord.service_name == search_info.service_name)
     if search_info.service_money is not None:
@@ -64,13 +66,16 @@ async def search_service_for_user(user_id: str, conn: Session, search_info: Sear
         query = query.filter(
             or_(ServiceRecord.seller_company_id == search_info.seller_company_id,
                 ServiceRecord.seller_company_id is None))
+    if search_info.is_exception is not None:
+        query = query.filter(
+            or_(ServiceRecord.is_exception == search_info.is_exception, ServiceRecord.is_exception is None))
     search_info = await cover_time_zone(conn, search_info)
     query = query.filter(
         or_(ServiceRecord.upload_time.between(search_info.upload_time[0], search_info.upload_time[1]),
             ServiceRecord.upload_time is None))
-    if search_info.is_exception is not None:
-        query = query.filter(
-            or_(ServiceRecord.is_exception == search_info.is_exception, ServiceRecord.is_exception is None))
+    query = query.filter(
+        or_(ServiceRecord.service_time.between(search_info.service_time[0], search_info.service_time[1]),
+            ServiceRecord.service_time is None))
     results = query.all()
     if len(results) == 0:
         results = {'msg': '查找结果为空'}

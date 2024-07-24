@@ -40,7 +40,7 @@ async def upload_after_checking(user_id: str, records: List[UploadRecord]):
 
 
 @user_urls.post("/search_service/", summary='员工搜索自己的开票记录')
-async def search_service(user_id: str, search_info: SearchServiceInfoUser):
+async def search_service(user_id: str, search_info: Union[SearchServiceInfoUser, None] = None):
     with Session(bind=engine) as conn:
         query = conn.query(Worker.worker_id).filter(Worker.worker_id == user_id)
         if query.first() is None:
