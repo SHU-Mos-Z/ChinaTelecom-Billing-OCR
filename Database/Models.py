@@ -15,6 +15,27 @@ class Clas(Base):
     class_name = Column(String(60, 'utf8_unicode_ci'), nullable=False)
 
 
+class ClassQuotaMonthly(Base):
+    __tablename__ = 'class_quota_monthly'
+
+    class_id = Column(ForeignKey('class.class_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
+    year_ = Column(YEAR(4), primary_key=True, nullable=False)
+    quota_01 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_02 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_03 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_04 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_05 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_06 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_07 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_08 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_09 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_10 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_11 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+    quota_12 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
+
+    _class = relationship('Clas')
+
+
 class Worker(Base):
     __tablename__ = 'worker'
 
@@ -51,8 +72,7 @@ class ServiceRecord(Base):
 class WorkerQuotaMonthly(Base):
     __tablename__ = 'worker_quota_monthly'
 
-    worker_id = Column(ForeignKey('worker.worker_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True,
-                       nullable=False)
+    worker_id = Column(ForeignKey('worker.worker_id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
     year_ = Column(YEAR(4), primary_key=True, nullable=False)
     quota_01 = Column(Float(16), nullable=False, server_default=text("'0.00'"))
     quota_02 = Column(Float(16), nullable=False, server_default=text("'0.00'"))

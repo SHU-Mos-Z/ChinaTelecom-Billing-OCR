@@ -11,7 +11,7 @@ from datetime import datetime
 import pytz
 from pydantic import BaseModel
 from typing import List
-
+from Tools.CheckReal import *
 
 class UploadRecord(BaseModel):
     service_record_id: str
@@ -40,7 +40,7 @@ async def save_file(file: UploadFile, user_id: str, save_dir: str) -> str:
 
 async def extract_file(file: UploadFile, user_id: str, conn: Session, temp_dir: str, save_dir: str) -> Dict:
     save_file_location = await save_file(file, user_id, save_dir)
-    if file.filename.endswith('.pdf'):
+    if file.filename.endswith('.pdf') and check_seal_in_invoice(save_file_location):
         invoice_type = 'pdf'
         file_info = process_saved_pdf(file_dir=save_file_location)
     elif file.filename.endswith('.ofd'):
@@ -50,7 +50,7 @@ async def extract_file(file: UploadFile, user_id: str, conn: Session, temp_dir: 
         invoice_type = 'image'
         file_info = process_saved_photo(image_path=save_file_location)
     else:
-        return {'msg': '上传文件格式不正确，请使用pdf、ofd或图片文件重试'}
+        return {'msg': '上传文件格式不正确，或者文件非发票'}
     # print(file_info)
     if not await validate_invoice(file_info):
         return {'msg': '文件识别信息不充分，请重试'}
